@@ -1,0 +1,18 @@
+{
+  "name": "ZeroRIR Strength Coaching",
+  "short_name": "ZeroRIR",
+  "description": "Mobile-first strength coaching platform for coach and client workflows",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

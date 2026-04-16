@@ -5,10 +5,13 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
   onSnapshot,
   orderBy,
   query,
   setDoc,
+  updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { premadePrograms } from "@/lib/workoutLogic";
@@ -189,4 +192,31 @@ export async function addWorkoutLog(log: Omit<WorkoutLog, "id" | "createdAt">) {
     id: createId(),
     createdAt: Date.now(),
   });
+}
+
+async function findLogDocRef(logId: string) {
+  const q = query(collection(db, LOGS), where("id", "==", logId), limit(1));
+  const snapshot = await getDocs(q);
+  return snapshot.docs[0]?.ref || null;
+}
+
+export async function updateWorkoutLog(
+  logId: string,
+  updates: Pick<WorkoutLog, "weight" | "reps" | "note" | "estimatedOneRm" | "isPr">
+) {
+  const ref = await findLogDocRef(logId);
+  if (!ref) {
+    throw new Error("Log not found.");
+  }
+
+  await updateDoc(ref, updates);
+}
+
+export async function deleteWorkoutLog(logId: string) {
+  const ref = await findLogDocRef(logId);
+  if (!ref) {
+    throw new Error("Log not found.");
+  }
+
+  await deleteDoc(ref);
 }

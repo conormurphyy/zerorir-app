@@ -40,6 +40,7 @@ export default function WorkoutPage() {
     assignedProgram.days.find((item) => item.id === selectedDayId) ||
     assignedProgram.days.find((item) => item.dayIndex === todayDayIndex()) ||
     assignedProgram.days[0];
+  const programId = assignedProgram.id;
 
   async function saveSet(exerciseName: string, dayName: string) {
     const current = quick[exerciseName] || { weight: 0, reps: 0, note: "" };
@@ -59,7 +60,7 @@ export default function WorkoutPage() {
       note: current.note,
       estimatedOneRm,
       isPr,
-      programId: assignedProgram.id,
+      programId,
     });
 
     setQuick((state) => ({
